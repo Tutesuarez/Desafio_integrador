@@ -41,14 +41,14 @@ createForm.addEventListener("submit", async (e) => {
     Swal.fire({
       text: `${message.success}`,
       toast: true,
-      position: "top-right",
+      position: "top-center",
     })
     createForm.reset()
   } else {
     Swal.fire({
       text: `${message.error}`,
       toast: true,
-      position: "top-right",
+      position: "top-center",
     })
   }
 })

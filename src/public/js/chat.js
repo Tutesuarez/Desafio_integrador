@@ -6,7 +6,7 @@ let messageLogs = document.querySelector("#message_logs")
 
 Swal.fire({
   title: "Welcome to the Chat!",
-  text: "Please fill whit your name:",
+  text: "Please fill with your email:",
   input: "text",
   inputValidator: (value) => {
     return !value && "You need to write a username to continue!"
@@ -53,7 +53,7 @@ socket.on("newuserconnected", (data) => {
     Swal.fire({
       text: `${data.user} A new user has conected`,
       toast: true,
-      position: "top-right",
+      position: "top-center",
     });
   }
 });

@@ -1,7 +1,7 @@
 import { productModel } from "../models/product.model.js"
 
 export default class ProductManager {
-  
+
   async addProduct(product) {
     try {
       if (this.#checkMandatoryFields(product))

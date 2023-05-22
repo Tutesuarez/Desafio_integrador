@@ -10,7 +10,7 @@ export default class CartManager {
       return { error: `The cart was created succesfully.`, payload: error }
     }
   }
-
+s
   async #getCarts() {
     let result = await cartModel.find({}, { __v: 0 }).lean()
     return result
@@ -29,27 +29,26 @@ export default class CartManager {
   async addProductToCart(cid, pid) {
     try {
       let product = await this.#checkIfProductExist(pid)
-     
+
       if (product?.error)
         throw new Error(`The product does not exist.`)
-      
-        let cartExist = await this.getCart(cid)
-      
+
+      let cartExist = await this.getCart(cid)
+
       if (cartExist?.error)
         throw new Error(`The cart does not exist.`)
-      
-        let cart = await cartModel.find({ "products.pid": pid })
-      
+
+      let cart = await cartModel.find({ "products.pid": pid })
+
       let result
 
-      if (cart.length !== 0) {
-        let newProducts = []
-
-        cart[0].products.forEach((product) => {
-          if (product.pid === pid) product.quantity++
-          newProducts.push(product)
+      if (cart.length) {
+        const newProducts = cart[0].products.map((product) => {
+          if (product.pid === pid) {
+            return { ...product, quantity: product.quantity + 1 }
+          }
+          return product
         })
-
         result = await cartModel.updateOne(
           { _id: cid },
           { products: newProducts }
@@ -57,7 +56,7 @@ export default class CartManager {
       } else {
         result = await cartModel.updateOne(
           { _id: cid },
-          { $push: { products: { pid: pid, quantity: 1 } } }
+          { $push: { products: { pid, quantity: 1 } } }
         )
       }
       return {
@@ -65,12 +64,11 @@ export default class CartManager {
         payload: result,
       }
     } catch (error) {
-      return { error: error.message };
+      return { error: error.message }
     }
   }
 
-  //Check if cart exists
-
+  //Check si existe
   async #checkIfProductExist(pid) {
     let productManager = new ProductManager()
     let product = await productManager.getProductById(pid)

@@ -5,7 +5,7 @@ import handlebars from "express-handlebars"
 import MessageManager from "./controller/MongoDbManagers/MessageManager.js"
 import express from "express"
 import cors from "cors"
-import { __dirname} from "./path.js"
+import { __dirname } from "./path.js"
 import { Server } from "socket.io"
 import mongoose from "mongoose"
 import "dotenv/config"
@@ -16,7 +16,7 @@ const app = express()
 
 try {
   await mongoose.connect(process.env.URL_MONGODB_ATLAS)
-      .then('DB is Connected')
+    .then('DB is Connected')
 } catch (error) {
   console.log(error)
 }
